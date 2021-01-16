@@ -12,6 +12,10 @@ public class PlayerMove : MonoBehaviour {
     // Update is called once per frame
     void Update(){
 
+        
+    }
+
+    void FixedUpdate (){
         float horizontal = Input.GetAxis("Horizontal");
         float jump = Input.GetAxis("Jump");
 
@@ -26,10 +30,6 @@ public class PlayerMove : MonoBehaviour {
 
         Vector3 move = new Vector3(horizontal*speed,0,0);
         rigidbody.AddForce(move);
-    }
-
-    void FixedUpdate (){
-        
     }
 
     void OnCollisionEnter (Collision collision){
