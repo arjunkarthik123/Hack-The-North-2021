@@ -9,14 +9,18 @@ public class PlayerMove : MonoBehaviour {
     public float maxDistance;
     bool grounded = false;
     bool dash = true;
-    public BoxCollider collider;
+    public BoxCollider playerCollider;
+    public BoxCollider dashCollider;
     public Rigidbody rigidbody;
 
     public Transform player;
 
+    void Start (){
+        Physics.IgnoreLayerCollision(0,9,true);
+    }
     // Update is called once per frame
     void Update(){
-        if(Input.GetKeyDown(KeyCode.Mouse0)){
+        if(Input.GetKeyDown(KeyCode.Mouse0)&&dash){
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(new Vector3 (Input.mousePosition.x,Input.mousePosition.y,-10));
             
             Vector3 moveVector = (mousepos - player.transform.position)* dashSpeed;
@@ -40,7 +44,6 @@ public class PlayerMove : MonoBehaviour {
 
         
         
-        
 
         Vector3 move = new Vector3(horizontal*speed,0,0);
         rigidbody.AddForce(move);
@@ -52,6 +55,15 @@ public class PlayerMove : MonoBehaviour {
             grounded = true;
             dash = true;
         }
+        if(collision.gameObject.layer == 9){
+            dash = true;
+        }
 
     }
+
+    void OnTriggerEnter(Collider dashReset)
+    {
+        dash = true;
+    }
+
 }
