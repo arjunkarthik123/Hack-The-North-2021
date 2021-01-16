@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour {
     public float jumpSpeed;
     bool grounded = false;
     public BoxCollider collider;
+    public Rigidbody rigidbody;
 
     // Update is called once per frame
     void Update(){
@@ -14,19 +15,17 @@ public class PlayerMove : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         float jump = Input.GetAxis("Jump");
 
-        Vector2 move;
 
         if(jump == 1 && grounded){
-            move = new Vector2(horizontal,jump*jumpSpeed);
+            Debug.Log("LUL");
+            rigidbody.AddForce(new Vector3(0,jumpSpeed,0));
             grounded = false;
         }
-        else {
-            move = new Vector2(horizontal,0);
-        }
+        
         
 
-        
-        transform.Translate(move*Time.deltaTime*speed);
+        Vector3 move = new Vector3(horizontal*speed,0,0);
+        rigidbody.AddForce(move);
     }
 
     void FixedUpdate (){
@@ -34,6 +33,7 @@ public class PlayerMove : MonoBehaviour {
     }
 
     void OnCollisionEnter (Collision collision){
+        
         if(collision.gameObject.layer == 8){
             grounded = true;
         }
