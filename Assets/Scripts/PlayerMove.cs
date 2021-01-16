@@ -5,14 +5,27 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour {
     public float speed;
     public float jumpSpeed;
+    public float dashSpeed;
+    public float maxDistance;
     bool grounded = false;
+    bool dash = true;
     public BoxCollider collider;
     public Rigidbody rigidbody;
 
+    public Transform player;
+
     // Update is called once per frame
     void Update(){
-
-        
+        if(Input.GetKeyDown(KeyCode.Mouse0)){
+            Vector3 mousepos = Camera.main.ScreenToWorldPoint(new Vector3 (Input.mousePosition.x,Input.mousePosition.y,-10));
+            
+            Vector3 moveVector = (mousepos - player.transform.position)* dashSpeed;
+            moveVector.z =0;
+            Debug.Log(moveVector);
+ 
+            rigidbody.AddForce(moveVector);
+            dash = false;
+        }   
     }
 
     void FixedUpdate (){
@@ -21,10 +34,11 @@ public class PlayerMove : MonoBehaviour {
 
 
         if(jump == 1 && grounded){
-            Debug.Log("LUL");
             rigidbody.AddForce(new Vector3(0,jumpSpeed,0));
             grounded = false;
         }
+
+        
         
         
 
@@ -36,6 +50,8 @@ public class PlayerMove : MonoBehaviour {
         
         if(collision.gameObject.layer == 8){
             grounded = true;
+            dash = true;
         }
+
     }
 }
