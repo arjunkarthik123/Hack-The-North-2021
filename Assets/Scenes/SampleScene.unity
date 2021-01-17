@@ -826,7 +826,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543196155}
-  m_Material: {fileID: 13400000, guid: 8f2bad33889f59649abded29aed12e3c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1784,7 +1784,7 @@ MonoBehaviour:
   playerCollider: {fileID: 1277523185}
   dashCollider: {fileID: 177575704}
   rigidbody: {fileID: 1277523184}
-  dashTime: 0.75
+  dashTime: 0.25
   player: {fileID: 1277523189}
 --- !u!4 &1277523189 stripped
 Transform:
@@ -1804,8 +1804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa8ad3cba36ca141a47be2aa73f30e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallMultiplier: 2.5
-  lowJumpMultiplier: 2
+  fallMultiplier: 6
+  lowJumpMultiplier: 5
 --- !u!1 &1401860567
 GameObject:
   m_ObjectHideFlags: 0
