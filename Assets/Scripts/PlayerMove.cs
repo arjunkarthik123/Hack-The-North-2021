@@ -12,6 +12,9 @@ public class PlayerMove : MonoBehaviour {
     public BoxCollider playerCollider;
     public BoxCollider dashCollider;
     public Rigidbody rigidbody;
+    public float dashTime;
+    private float timeDashed;
+
 
     public Transform player;
 
@@ -22,29 +25,31 @@ public class PlayerMove : MonoBehaviour {
     void Update(){
         if(Input.GetKeyDown(KeyCode.Mouse0)&&dash){
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(new Vector3 (Input.mousePosition.x,Input.mousePosition.y,-10));
+            timeDashed = Time.realtimeSinceStartup;
             
             Vector3 moveVector = (mousepos - player.transform.position)* dashSpeed;
+            rigidbody.drag = 10;
             moveVector.z =0;
-            Debug.Log(moveVector);
  
             rigidbody.AddForce(moveVector);
             dash = false;
         }   
+
+        if(Time.realtimeSinceStartup-timeDashed >= dashTime){
+            rigidbody.drag =1;
+        }
     }
 
     void FixedUpdate (){
         float horizontal = Input.GetAxis("Horizontal");
-        float jump = Input.GetAxis("Jump");
 
 
-        if(jump == 1 && grounded){
-            rigidbody.AddForce(new Vector3(0,jumpSpeed,0));
+        if(Input.GetButtonDown("Jump") && grounded){
+            rigidbody.velocity = Vector2.up*jumpSpeed;
             grounded = false;
         }
 
         
-        
-
         Vector3 move = new Vector3(horizontal*speed,0,0);
         rigidbody.AddForce(move);
     }
@@ -57,6 +62,9 @@ public class PlayerMove : MonoBehaviour {
         }
         if(collision.gameObject.layer == 9){
             dash = true;
+        }
+        if(collision.gameObject.layer == 10){
+            player.transform.position = new Vector3 (0,0,0);
         }
 
     }
