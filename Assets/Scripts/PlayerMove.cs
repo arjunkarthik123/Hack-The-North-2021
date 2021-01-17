@@ -50,8 +50,7 @@ public class PlayerMove : MonoBehaviour {
         }
 
         
-        Vector3 move = new Vector3(horizontal*speed,0,0);
-        rigidbody.AddForce(move);
+        rigidbody.velocity = new Vector2(horizontal*speed,rigidbody.velocity.y);
     }
 
     void OnCollisionEnter (Collision collision){
